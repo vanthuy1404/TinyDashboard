@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <!-- Logo bên trái -->
+          <a class="navbar-brand" href="/">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Your Logo" height="35" class="d-inline-block align-top"><strong class="text-success" style="margin-left: 15px;">Tiny Oasis</strong>
+          </a>
+
+          <!-- Button để toggle menu trên màn hình nhỏ -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Menu bên phải -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/" style="color: black;font-weight: 500;">Quản lí người dùng</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/products_management" style="color: black;font-weight: 500;">Quản lí sản phẩm</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+{%with messages = get_flashed_messages(with_categories = true)%}
+{%if messages%}
+      {%for category, message in messages%}
+        {%if category =='error'%}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {%else%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{message}}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {%endif%}
+      {%endfor%}
+{%endif%}
+{%endwith%}
+    <div class="container mt-5">
+        <h3 class="mb-4 text-success">Danh sách người dùng</h3>
+        <ul id="user-list" class="list-group">
+            <!-- Danh sách người dùng sẽ được cập nhật bằng dữ liệu từ Flask -->
+            {% for user in users %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>ID:</strong> {{ user.id }}<br>
+                        <strong>Username:</strong> {{ user.username }}<br>
+                        <strong>Email:</strong> {{ user.email }}<br>
+                        <strong>Full Name:</strong> {{ user.full_name }}<br>
+                        <strong>Password:</strong> {{ user.password }}<br>
+                    </div>
+                    <div>
+                        <form action="/delete_user/{{ user.id }}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    <div class="container mt-5">
+        <h3 class="text-success">Thêm Người Dùng</h3>
+        <form action="/add_user" method="post">
+            <div class="form-group" style="width:60%">
+                <label for="username">Tên người dùng:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="full_name">Họ tên:</label>
+                <input type="text" class="form-control" id="full_name" name="full_name">
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Thêm</button>
+        </form>
+    </div>
+    </div>
+    <div class="container mt-5">
+        <h3 class="text-success">Cập nhật Người Dùng</h3>
+        <form action="/update_user" method="post">
+            <div class="form-group" style="width:60%">
+                <label for="id1">ID: </label>
+                <input type="text" class="form-control"  name="id1" placeholder="ID người dùng cần cập nhật"  required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="full_name">Họ và tên:</label>
+                <input type="text" class="form-control"  name="full_name"  required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control"  name="email"  required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="username">Tên người dùng:</label>
+                <input type="text" class="form-control"  name="username"  required>
+            </div>
+            <div class="form-group" style="width:60%">
+                <label for="password">Mật khẩu:</label>
+                <input type="password" class="form-control"  name="password" required>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Cập nhật</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
