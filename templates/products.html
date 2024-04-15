@@ -26,7 +26,10 @@
                 <a class="nav-link" href="/" style="color: black;font-weight: 500;">Quản lí người dùng</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/products" style="color: black;font-weight: 500;">Quản lí sản phẩm</a>
+                <a class="nav-link" href="products_management" style="color: black;font-weight: 500;">Quản lí sản phẩm</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/orders_management" style="color: black;font-weight: 500;">Đơn hàng</a>
               </li>
             </ul>
           </div>
@@ -50,13 +53,13 @@
 {%endif%}
 {%endwith%}
     <div class="container mt-5">
-        <h2 class="mb-4">Product List</h2>
+      <h3 class="mb-4 text-success">Danh sách sản phẩm</h3>
         <div class="row">
             {% for product in products %}
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
+                        <h5 class="card-title text-success">{{ product.name }}</h5>
                         <p class="card-text">Product code: {{ product.product_code }}</p>
                         <p class="card-text">Category: {{ product.category }}</p>
                         <p class="card-text">Price: {{ product.price }}</p>

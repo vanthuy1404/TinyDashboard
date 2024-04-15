@@ -102,5 +102,13 @@ def add_product():
         flash('Có lỗi xảy ra', 'error')
 
     return redirect(url_for('display_products'))
+@app.route('/orders_management', methods =['POST','GET'])
+def orders_management():
+    response = requests.get(f'{url}/orders')
+    if response.status_code == 200:
+        orders = response.json()
+        return render_template('orders.html', orders= orders)
+    else:
+        return "Không có sản phẩm"
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
